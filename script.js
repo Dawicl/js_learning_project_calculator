@@ -7,7 +7,7 @@ class Calculator {
     
     clear() {
         this.currentOperand = ""
-        this.previosuOperand = ""
+        this.previousOperand = ""
         this.operation = ""
     }
 
@@ -22,17 +22,17 @@ class Calculator {
 
     chooseOperation(operation) {
         if (this.currentOperand === '') return
-        if (this.previosuOperand !== '') {
+        if (this.previousOperand !== '') {
             this.compute()
         }
         this.operation = operation
-        this.previosuOperand = this.currentOperand
+        this.previousOperand = this.currentOperand
         this.currentOperand = ''
     }
 
     compute() {
         let computation
-        const prev = parseFloat(this.previosuOperand)
+        const prev = parseFloat(this.previousOperand)
         const current = parseFloat(this.currentOperand)
         if (isNaN(prev) || isNaN(current)) return
         switch (this.operation) {
@@ -53,37 +53,37 @@ class Calculator {
         }
         this.currentOperand = computation
         this.operation = undefined
-        this.previosuOperand = ''
+        this.previousOperand = ''
     } 
 
-    getDisplayNumber() {
+    getDisplayNumber(number) {
         const stringNumber = number.toString()
-        integerDigits = parseFloat(stringNumber.split('.')[0])
-        decimalDigits = stringNumber.split('.')[1]
+        const integerDigits = parseFloat(stringNumber.split('.')[0])
+        const decimalDigits = stringNumber.split('.')[1]
         let integerDisplay
-        if (isNaN(integerDisplay)) {
-            integerDisplay = ''
+        if (isNaN(integerDigits)) {
+          integerDisplay = ''
         } else {
-            integerDisplay = integerDigits.toLocaleString('en', {maximumFractionDigits: 0})
+          integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
         }
         if (decimalDigits != null) {
-            return `${integerDisplay}.${decimalDigits}`
+          return `${integerDisplay}.${decimalDigits}`
         } else {
-            return integerDisplay
+          return integerDisplay
         }
-    }
+      }
 
-    updateDisplay() {
+      updateDisplay() {
         this.currentOperandTextElement.innerText =
-            this.getDisplayNumber(this.currentOperand)
+          this.getDisplayNumber(this.currentOperand)
         if (this.operation != null) {
-            this.previousOperandTextElement.innerText = 
-            `${this.getDisplayNumber(this.previosuOperand)} ${this.operation}`
+          this.previousOperandTextElement.innerText =
+            `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
         } else {
-            this.previousOperandTextElement.innerText = ''
+          this.previousOperandTextElement.innerText = ''
         }
+      }
     }
-}
 
 
 const numberButtons = document.querySelectorAll('[data-number]')
